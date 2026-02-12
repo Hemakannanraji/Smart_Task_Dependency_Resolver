@@ -1,25 +1,53 @@
-import { createContext, useState, useEffect } from "react";
+// import { createContext, useState, useEffect } from "react";
+
+// export const AuthContext = createContext();
+
+// export const AuthProvider = ({ children }) => {
+//   const [user, setUser] = useState(null);
+
+//   // Load user from localStorage on refresh
+//   useEffect(() => {
+//     const storedUser = localStorage.getItem("user");
+//     if (storedUser) {
+//       setUser(JSON.parse(storedUser));
+//     }
+//   }, []);
+
+//   // Login
+//   const login = (userData) => {
+//     setUser(userData);
+//     localStorage.setItem("user", JSON.stringify(userData));
+//   };
+
+//   // Logout
+//   const logout = () => {
+//     setUser(null);
+//     localStorage.removeItem("user");
+//   };
+
+//   return (
+//     <AuthContext.Provider value={{ user, login, logout }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };
+
+// //==============================================================
+
+import { createContext, useState } from "react";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
 
-  // Load user from localStorage on refresh
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
-
-  // Login
   const login = (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
   };
 
-  // Logout
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");

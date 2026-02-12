@@ -8,14 +8,12 @@ function Login() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // ✅ Admin email list
   const ADMIN_EMAILS = ["hema2005kannan@gmail.com"];
 
   const handleSuccess = (credentialResponse) => {
     try {
       const decoded = jwtDecode(credentialResponse.credential);
 
-      // ✅ Decide role
       const role = ADMIN_EMAILS.includes(decoded.email)
         ? "admin"
         : "user";
@@ -26,10 +24,8 @@ function Login() {
         role: role,
       };
 
-      // ✅ Save user in context + localStorage
       login(userData);
 
-      // ✅ Redirect based on role
       if (role === "admin") {
         navigate("/admin");
       } else {
@@ -45,15 +41,55 @@ function Login() {
   };
 
   return (
-    <div style={{ marginTop: "100px", textAlign: "center" }}>
-      <h2>Login with Google</h2>
+    <div style={styles.container}>
+      <div style={styles.card}>
+        <h1 style={styles.title}>Smart Task Dependency Resolver</h1>
+        <p style={styles.subtitle}>
+          Organize, Prioritize and Execute Tasks Efficiently
+        </p>
 
-      <GoogleLogin
-        onSuccess={handleSuccess}
-        onError={handleError}
-      />
+        <div style={{ marginTop: "30px" }}>
+          <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
+        </div>
+
+        <p style={styles.footerText}>
+          Secure login powered by Google
+        </p>
+      </div>
     </div>
   );
 }
+
+const styles = {
+  container: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "linear-gradient(135deg, #0061A2, #E3F1FF)",
+    fontFamily: "Arial, sans-serif",
+  },
+  card: {
+    backgroundColor: "white",
+    padding: "50px",
+    borderRadius: "15px",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+    textAlign: "center",
+    width: "400px",
+  },
+  title: {
+    color: "#0061A2",
+    marginBottom: "10px",
+  },
+  subtitle: {
+    color: "#555",
+    fontSize: "14px",
+  },
+  footerText: {
+    marginTop: "25px",
+    fontSize: "12px",
+    color: "#888",
+  },
+};
 
 export default Login;

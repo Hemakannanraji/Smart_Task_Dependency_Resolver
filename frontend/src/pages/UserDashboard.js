@@ -1,50 +1,32 @@
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { googleLogout } from "@react-oauth/google";
+import Navbar from "../components/layout/Navbar";
+import Sidebar from "../components/layout/Sidebar";
+import DashboardCard from "../components/layout/DashboardCard";
 
 function UserDashboard() {
-  const { user, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  // 🔐 Redirect if user logs out
-  useEffect(() => {
-    if (!user) {
-      navigate("/login", { replace: true });
-      
-    }
-  }, [user, navigate]);
-
-  const handleLogout = () => {
-    googleLogout();   // end Google session
-    logout();         // clears user + localStorage
-    // ❌ DO NOT navigate here
-  };
-
-  if (!user) return null; // prevents blank flicker
-
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>User Dashboard</h1>
+    <div style={{ display: "flex", backgroundColor: "#F4FAFF" }}>
+      <Sidebar />
 
-      <p><strong>Name:</strong> {user.name}</p>
-      <p><strong>Email:</strong> {user.email}</p>
+      <div style={{ flex: 1 }}>
+        <Navbar title="User Dashboard" />
 
-      <button
-        onClick={handleLogout}
-        style={{
-          padding: "10px 15px",
-          backgroundColor: "#d9534f",
-          color: "#fff",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Logout
-      </button>
+        <div style={styles.content}>
+          <DashboardCard title="My Tasks" value="12" />
+          <DashboardCard title="Completed" value="7" />
+          <DashboardCard title="Pending" value="5" />
+        </div>
+      </div>
     </div>
   );
 }
+
+const styles = {
+  content: {
+    padding: "30px",
+    display: "flex",
+    gap: "20px",
+    flexWrap: "wrap",
+  },
+};
 
 export default UserDashboard;

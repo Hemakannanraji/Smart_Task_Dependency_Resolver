@@ -2,6 +2,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import TasksPage from "./pages/TasksPage";
+import ReportsPage from "./pages/ReportsPage";
+import DependenciesPage from "./pages/DependenciesPage";
+
+
 
 function App() {
   return (
@@ -18,6 +23,16 @@ function App() {
 
       {/* Fallback (optional but recommended) */}
       <Route path="*" element={<Navigate to="/login" />} />
+
+      {/* Task */}
+      <Route path="/tasks" element={<TasksPage />} />
+      
+      {/* Dependency */}
+      <Route path="/dependencies" element={<DependenciesPage />} />
+
+      {/* Reports */}
+      <Route path="reports" element={<ReportsPage />} />
+
     </Routes>
   );
 }

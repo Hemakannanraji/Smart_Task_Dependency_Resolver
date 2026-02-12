@@ -1,32 +1,32 @@
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { googleLogout } from "@react-oauth/google";
+import Navbar from "../components/layout/Navbar";
+import Sidebar from "../components/layout/Sidebar";
+import DashboardCard from "../components/layout/DashboardCard";
 
 function AdminDashboard() {
-  const { user, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user || user.role !== "admin") {
-      navigate("/login");
-    }
-  }, [user, navigate]);
-
-  const handleLogout = () => {
-    googleLogout();
-    logout();
-  };
-
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Admin Dashboard</h1>
-      <p><strong>Name:</strong> {user?.name}</p>
-      <p><strong>Email:</strong> {user?.email}</p>
+    <div style={{ display: "flex", backgroundColor: "#F4FAFF" }}>
+      <Sidebar />
 
-      <button onClick={handleLogout}>Logout</button>
+      <div style={{ flex: 1 }}>
+        <Navbar title="Admin Dashboard" />
+
+        <div style={styles.content}>
+          <DashboardCard title="Total Users" value="1" />
+          <DashboardCard title="Active Tasks" value="6" />
+          <DashboardCard title="Pending Approvals" value="3" />
+        </div>
+      </div>
     </div>
   );
 }
+
+const styles = {
+  content: {
+    padding: "30px",
+    display: "flex",
+    gap: "20px",
+    flexWrap: "wrap",
+  },
+};
 
 export default AdminDashboard;
