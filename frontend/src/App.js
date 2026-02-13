@@ -7,7 +7,6 @@ import ReportsPage from "./pages/ReportsPage";
 import DependenciesPage from "./pages/DependenciesPage";
 
 
-
 function App() {
   return (
     <Routes>
